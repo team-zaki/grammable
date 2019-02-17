@@ -39,8 +39,9 @@ RSpec.describe GramsController, type: :controller do
 
 
   describe "grams#create action" do
+
     it "should require users to be logged in" do
-      post :create, params: { gram: { message: "Hello"} }
+      post :create, params: { gram: { message: "Hello" } }
       expect(response).to redirect_to new_user_session_path
     end
 
@@ -48,13 +49,7 @@ RSpec.describe GramsController, type: :controller do
       user = FactoryBot.create(:user)
       sign_in user
 
-      post :create, params: { 
-        gram: { 
-          message: 'Hello!',
-          picture: fixture_file_upload("/picture.png", 'image/png')
-        } 
-      }
-      
+      post :create, params: { gram: { message: 'Hello!' } }
       expect(response).to redirect_to root_path
 
       gram = Gram.last
@@ -66,9 +61,11 @@ RSpec.describe GramsController, type: :controller do
       user = FactoryBot.create(:user)
       sign_in user
 
-      post :create, params: { gram: { message: ''} }
+      gram_count = Gram.count
+      post :create, params: { gram: { message: '' } }
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(Gram.count).to eq Gram.count 
+      expect(gram_count).to eq Gram.count
     end
+
   end
 end
