@@ -12,5 +12,4 @@ require 'rails_helper'
 # end
 RSpec.describe CommentsHelper, type: :helper do
 
-
 end
